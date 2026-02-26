@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}Recognition Result - Vision ATTD{% endblock %}
+
+{% block content %}
+<div class="card"
+    style="max-width: 600px; margin: 2rem auto; text-align: center; border-bottom: 4px solid {% if status == 'Success' %}var(--accent){% else %}var(--error){% endif %};">
+    {% if status == 'Success' %}
+    <div style="font-size: 5rem; margin-bottom: 1.5rem; filter: drop-shadow(0 0 20px rgba(0, 255, 136, 0.3));">🛡️</div>
+    <h1 style="color: var(--accent); margin-bottom: 0.5rem;">Identity Verified</h1>
+    <p style="font-size: 1.4rem; font-weight: 600; margin-bottom: 0.5rem;">{{ name }}</p>
+    <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 2rem;">Match Confidence: <span
+            style="color: #fff;">{{ confidence }}%</span></p>
+    <p style="background: rgba(0, 255, 136, 0.05); padding: 1rem; border-radius: 12px; font-size: 0.9rem;">The
+        attendance check-in has been successfully encrypted and logged.</p>
+    {% else %}
+    <div style="font-size: 5rem; margin-bottom: 1.5rem; filter: drop-shadow(0 0 20px rgba(255, 77, 77, 0.3));">🚫</div>
+    <h1 style="color: var(--error); margin-bottom: 1rem;">Verification Failed</h1>
+    <p style="margin-bottom: 0.5rem;">Subject identity could not be established as <strong>{{ name }}</strong>.</p>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2.5rem;">Please ensure lighting is optimal and
+        the subject is registered.</p>
+    {% endif %}
+
+    <div style="margin-top: 3rem; display: flex; gap: 1rem; justify-content: center;">
+        <a href="{{ url_for('index') }}" class="btn primary" style="padding: 0.8rem 2rem;">New Scan</a>
+        <a href="{{ url_for('view_attendance') }}" class="btn">Audit Logs</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI Attendance System{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header class="brand">
+            <svg class="logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="#00d2ff" stroke-width="2" />
+                <path d="M7 12L10 15L17 8" stroke="#00ff88" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <path
+                    d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z"
+                    stroke="#00d2ff" stroke-opacity="0.2" stroke-width="2" />
+            </svg>
+            <h1>VISION ATTD</h1>
+            <p>Advanced AI Recognition Engine</p>
+            {% if current_user.is_authenticated %}
+            <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--accent);">
+                Admin Session Active | <a href="{{ url_for('logout') }}"
+                    style="color: var(--error); text-decoration: none;">Logout</a>
+            </div>
+            {% endif %}
+        </header>
+
+        <nav class="nav-links">
+            <a href="{{ url_for('index') }}" class="btn">Home</a>
+            <a href="{{ url_for('register') }}" class="btn">Register</a>
+            <a href="{{ url_for('view_attendance') }}" class="btn">Records</a>
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('admin_dashboard') }}" class="btn" style="border-color: var(--primary);">System
+                Dashboard</a>
+            {% else %}
+            <a href="{{ url_for('login') }}" class="btn">Admin Access</a>
+            {% endif %}
+        </nav>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="card"
+            style="border-color: {% if category == 'error' %}var(--error){% else %}var(--accent){% endif %}; margin-bottom: 2rem; padding: 1.5rem; text-align: center;">
+            <span
+                style="color: {% if category == 'error' %}var(--error){% else %}var(--accent){% endif %}; font-weight: 600;">{{
+                message }}</span>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+
+        <footer style="margin-top: 5rem; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+            &copy; 2026 Vision ATTD Systems. All Rights Reserved.
+        </footer>
+    </div>
+</body>
+
+</html>

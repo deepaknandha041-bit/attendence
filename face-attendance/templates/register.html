@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}Enroll New Profile - Vision ATTD{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 700px; margin: 0 auto;">
+    {% if success %}
+    <div style="text-align: center; padding: 2rem;">
+        <div style="font-size: 4rem; margin-bottom: 1.5rem;">✨</div>
+        <h2 style="color: var(--accent); margin-bottom: 1rem;">Profile Initialized</h2>
+        <p style="margin-bottom: 2rem;">Successfully registered <strong>{{ username }}</strong> with {{ count }} facial
+            biometric samples.</p>
+        <a href="{{ url_for('index') }}" class="btn primary">Return to Console</a>
+    </div>
+    {% elif error %}
+    <div style="text-align: center; padding: 2rem;">
+        <div style="font-size: 4rem; margin-bottom: 1.5rem;">⚠️</div>
+        <h2 style="color: var(--error); margin-bottom: 1rem;">Initialization Failed</h2>
+        <p style="margin-bottom: 2rem;">{{ error }}</p>
+        <a href="{{ url_for('register') }}" class="btn">Retry Enrollment</a>
+    </div>
+    {% else %}
+    <div style="margin-bottom: 2.5rem;">
+        <h2 style="margin: 0;">Biometric Enrollment</h2>
+        <p style="color: var(--text-muted); margin-top: 0.25rem;">Create a unique digital identity for recognition.</p>
+    </div>
+
+    <form action="/register" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="username">Subject Full Name</label>
+            <input type="text" id="username" name="username" placeholder="e.g. Johnathan Doe" required>
+        </div>
+        <div class="form-group">
+            <label for="photos">Face Sample Dataset (Multiple)</label>
+            <input type="file" id="photos" name="photos" accept="image/*" multiple required>
+            <small style="display: block; margin-top: 1rem; color: var(--text-muted);">Please provide 5-10 clear photos
+                from slightly different angles for maximum engine precision.</small>
+        </div>
+        <button type="submit" class="btn primary"
+            style="width: 100%; justify-content: center; padding: 1.25rem;">Process & Store Biometrics</button>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Attendance - AI Attendance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Live Face Recognition</h1>
+        </header>
+
+        <nav>
+            <a href="{{ url_for('index') }}" class="btn">Home</a>
+            <a href="{{ url_for('view_attendance') }}" class="btn">View Records</a>
+        </nav>
+
+        <div class="card">
+            <div class="video-container">
+                <img id="video-feed" src="{{ url_for('recognize_feed') }}" width="640" height="480">
+                <p>Position your face in front of the camera to mark attendance.</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
